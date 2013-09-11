@@ -1,0 +1,43 @@
+/* Put your custom CSS here */
+img.ui-li-thumb {
+	padding-left: 10px;
+	padding-top: 5px;
+}
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+	min-height: 24px;
+}
+.ui-li-thumb, .ui-listview .ui-li-icon {
+	max-width: 32px;
+	max-height: 32px;
+}
+div[data-role=header] img {
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+
+}
+
+h3[data-role=header] {
+	-webkit-margin-before:1px;
+	-webkit-margin-after:1px;
+}
+
+h3.conFecha {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+h3.conFecha span.titulo{
+	position: relative;
+	/*top:17px;*/
+}
+h1 div.fecpost {font-weight:normal;font-size:0.5em;}
+h3 div.fecpost  {margin-right:10px;}
+h3.cab {color:#333 !important; font-style:normal !important; border-bottom:1px solid #333;margin-left:10px !important; margin-right:10px !important;margin-bottom:20px !important;}
+h3 span.tit {display:block;float:left; margin-top:10px;}
+
+div.fecpost {border:1px solid #ddd;float:left;width:auto;text-align:center;padding:5px;font-size:0.6em;font-style:normal; color:#333;}
+div.fecpost span {display:block;text-align:center;}
+div.fecpost span.fecpostM {}
+div.fecpost span.fecpostD {font-size:1.6em;font-weight:bold;}
+div.fecpost span.fecpostA {}
