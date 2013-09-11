@@ -182,4 +182,9 @@ $(document).bind('pageinit', function(){
             event.preventDefault();
             loadList(event);
         });
+
+        $("#estazioak").on("click", function(event){
+            event.preventDefault();
+            $.mobile.changePage(event.delegateTarget.href,{ transition: "none", changeHash: false });
+        });
     });
