@@ -42,6 +42,7 @@ $(document).bind('pageinit', function(){
                         $("div#" + hash).remove();
                         var json=$.parseJSON(data);
                         var totalPages = json.pages;
+                        alert(totalPages);
                         if (json.count==0) {
                             var title = "Ez da emaitzarik aurkitu";
                             var html = Mustache.to_html(newsTemplate, title);
