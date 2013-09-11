@@ -26,9 +26,7 @@ $(document).bind('pageinit', function(){
         }
 
         function loadList(event, hash){
-            alert(event.delegateTarget.href);
             var  currentPageNumber = parseInt(event.delegateTarget.href.split("page/")[1].split("/?")[0]);
-            alert(currentPageNumber);
             hash = "temp" + currentPageNumber;
             $.ajax({
                 url: event.delegateTarget.href,
@@ -42,7 +40,6 @@ $(document).bind('pageinit', function(){
                         $("div#" + hash).remove();
                         var json=$.parseJSON(data);
                         var totalPages = json.pages;
-                        alert(totalPages);
                         if (json.count==0) {
                             var title = "Ez da emaitzarik aurkitu";
                             var html = Mustache.to_html(newsTemplate, title);
