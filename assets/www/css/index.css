@@ -165,6 +165,10 @@ div.pagesButton a {
     background-image: linear-gradient(#ffffff,#ffffff);
 }
 
+.ui-footer {
+    position: absolute;
+}
+
 @media screen and (max-width: 490px) {
     .pagesButton .ui-btn-text {
         font-size: 14px;
