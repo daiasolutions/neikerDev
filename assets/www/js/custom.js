@@ -1,12 +1,5 @@
 $(document).bind('pageinit', function(){ 
 
-        alert($(".ui-bar-a").css("background-image"));
-
-        $(".ui-bar-a").css("background-image","linear-gradient(#FFFFFF,#FFFFFF)");
-        $(".ui-body-c").css("background-image","linear-gradient(#FFFFFF,#FFFFFF)");
-
-        alert($(".ui-bar-a").css("background-image"));
-
         $.mobile.defaultPageTransition="none";
         $("input[data-type=search]").attr("type","search");
 

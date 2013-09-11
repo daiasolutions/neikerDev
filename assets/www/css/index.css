@@ -150,10 +150,19 @@ div.pagesButton a {
     display: none;
 }
 .ui-bar-a {
-    background-image: linear-gradient(#FFFFFF,#FFFFFF);
-}
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#ffffff));
+    background-image: -webkit-linear-gradient(#ffffff,#ffffff);
+    background-image: -moz-linear-gradient(#ffffff,#ffffff);
+    background-image: -ms-linear-gradient(#ffffff,#ffffff);
+    background-image: -o-linear-gradient(#ffffff,#ffffff);
+    background-image: linear-gradient(#ffffff,#ffffff);
 .ui-body-c {
-    background-image: linear-gradient(#FFFFFF,#FFFFFF);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#ffffff));
+    background-image: -webkit-linear-gradient(#ffffff,#ffffff);
+    background-image: -moz-linear-gradient(#ffffff,#ffffff);
+    background-image: -ms-linear-gradient(#ffffff,#ffffff);
+    background-image: -o-linear-gradient(#ffffff,#ffffff);
+    background-image: linear-gradient(#ffffff,#ffffff);
 }
 
 @media screen and (max-width: 490px) {
