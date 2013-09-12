@@ -195,8 +195,8 @@ $(document).bind('pageinit', function(){
         });
 
         $("#estazioak").on("click", function(event) {
-+            var html = $.parseHTML(estazioakContent);
-+            $("body").append(html);
-+            $.mobile.changePage("#estaciones",{ transition: "none", changeHash: false }); 
-+        });
+            var html = $.parseHTML(estazioakContent);
+            $("body").append(html);
+            $.mobile.changePage("#estaciones",{ transition: "none", changeHash: false }); 
+        });
     });
