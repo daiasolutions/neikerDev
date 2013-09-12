@@ -95,7 +95,7 @@ $(document).bind('pageinit', function(){
 
                             $.mobile.hidePageLoadingMsg();
                             //on click
-                            $("a.news").on("click", function(event) {
+                            /*$("a.news").on("click", function(event) {
                                 event.preventDefault();
                                 $.ajax({
                                     url: event.delegateTarget.href,
@@ -144,7 +144,7 @@ $(document).bind('pageinit', function(){
                                         $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
                                     }
                                 });
-                            });  
+                            });*/  
                         }        
                     }
                 },
