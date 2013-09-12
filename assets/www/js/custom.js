@@ -4,6 +4,7 @@ $(document).bind('pageinit', function(){
         $("input[data-type=search]").attr("type","search");
 
         timestamp= new Date().getTime();
+        lastUrl=undefined;
 
         function getNextPageHref(href, pageNumber) {
             if (href.indexOf("Buscar")==-1) {
@@ -28,86 +29,89 @@ $(document).bind('pageinit', function(){
         function loadList(event, hash){
             var  currentPageNumber = parseInt(event.delegateTarget.href.split("page/")[1].split("/?")[0]);
             hash = "temp" + currentPageNumber;
-            $.ajax({
-                url: event.delegateTarget.href,
-                beforeSend: function ( xhr ) {
-                    $.mobile.showPageLoadingMsg();
-                },
-                success: function(data, textStatus, jqXHR) {
-                    event.preventDefault();
-                    var now = new Date().getTime();
-                    if ((now-timestamp) > 200) {
-                        $("div#" + hash).remove();
-                        var json=$.parseJSON(data);
-                        var totalPages = json.pages;
+            if (lastUrl!=event.delegateTarget.href) {
+                lastUrl=event.delegateTarget.href;
+                $.ajax({
+                    url: event.delegateTarget.href,
+                    beforeSend: function ( xhr ) {
+                        $.mobile.showPageLoadingMsg();
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        event.preventDefault();
+                        var now = new Date().getTime();
+                        if ((now-timestamp) > 200) {
+                            $("div#" + hash).remove();
+                            var json=$.parseJSON(data);
+                            var totalPages = json.pages;
 
-                        if (json.count==0) {//If no result
-                            var title = "Ez da emaitzarik aurkitu";
-                            var html = Mustache.to_html(newsTemplate, title);
-                            var content = $(html).find("div[data-role=content]")[0];
-                            $('body').append(html);
-                            $("#noticia > div[data-role=content]").replaceWith(content);
-                            $.mobile.hidePageLoadingMsg();
-                            $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
-                        } else { //if result loop for get json of every post
+                            if (json.count==0) {//If no result
+                                var title = "Ez da emaitzarik aurkitu";
+                                var html = Mustache.to_html(newsTemplate, title);
+                                var content = $(html).find("div[data-role=content]")[0];
+                                $('body').append(html);
+                                $("#noticia > div[data-role=content]").replaceWith(content);
+                                $.mobile.hidePageLoadingMsg();
+                                $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
+                            } else { //if result loop for get json of every post
 
-                            //Generate json to fill template
-                            var list=[];
-                            for (var i = 0; i < json.posts.length; i++) {
-                                var post=json.posts[i];
+                                //Generate json to fill template
+                                var list=[];
+                                for (var i = 0; i < json.posts.length; i++) {
+                                    var post=json.posts[i];
+                                    var object = {};
+                                    object.title=post.title;
+                                    object.href=post.url + "?json=1";
+                                    var date = new Date(post.date);
+                                    object.day=date.getDate();
+                                    object.month=months[date.getMonth()];
+                                    object.year=date.getYear()+1900;
+                                    list.push(object);
+                                };
                                 var object = {};
-                                object.title=post.title;
-                                object.href=post.url + "?json=1";
-                                var date = new Date(post.date);
-                                object.day=date.getDate();
-                                object.month=months[date.getMonth()];
-                                object.year=date.getYear()+1900;
-                                list.push(object);
-                            };
-                            var object = {};
-                            object.list=list;
-                            object.page = currentPageNumber;
+                                object.list=list;
+                                object.page = currentPageNumber;
 
-                            //Create html and append it to body
-                            var html = Mustache.to_html(listTemplate, object);
-                            $('body').append(html);
+                                //Create html and append it to body
+                                var html = Mustache.to_html(listTemplate, object);
+                                $('body').append(html);
 
-                            //$("#" + hash +" ul:visible").listview("refresh");
-                            window.location.hash=hash;
-                            $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
+                                //$("#" + hash +" ul:visible").listview("refresh");
+                                window.location.hash=hash;
+                                $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
 
-                            //Buttons of next and previous page depending
-                            if (currentPageNumber==1) {
-                                if (totalPages!=1) {
-                                    $("div.pagesButton a[data-icon=arrow-r]").css("display","block");
-                                    $("div.pagesButton a[data-icon=arrow-r]").attr("href",
+                                //Buttons of next and previous page depending
+                                if (currentPageNumber==1) {
+                                    if (totalPages!=1) {
+                                        $("div.pagesButton a[data-icon=arrow-r]").css("display","block");
+                                        $("div.pagesButton a[data-icon=arrow-r]").attr("href",
+                                            getNextPageHref(event.delegateTarget.href,currentPageNumber));
+                                    }
+                                } else {
+                                    $("div.pagesButton a[data-icon=arrow-l]").css("display","block");
+                                    $("div.pagesButton a[data-icon=arrow-l]").attr("href",
+                                        getPreviousPageHref(event.delegateTarget.href,currentPageNumber));
+                                    if (currentPageNumber!=totalPages) {
+                                        $("div.pagesButton a[data-icon=arrow-r]").css("display","block");
+                                        $("div.pagesButton a[data-icon=arrow-r]").attr("href",
                                         getNextPageHref(event.delegateTarget.href,currentPageNumber));
+                                    }
                                 }
-                            } else {
-                                $("div.pagesButton a[data-icon=arrow-l]").css("display","block");
-                                $("div.pagesButton a[data-icon=arrow-l]").attr("href",
-                                    getPreviousPageHref(event.delegateTarget.href,currentPageNumber));
-                                if (currentPageNumber!=totalPages) {
-                                    $("div.pagesButton a[data-icon=arrow-r]").css("display","block");
-                                    $("div.pagesButton a[data-icon=arrow-r]").attr("href",
-                                    getNextPageHref(event.delegateTarget.href,currentPageNumber));
-                                }
-                            }
 
-                            $.mobile.hidePageLoadingMsg();
-                        }        
+                                $.mobile.hidePageLoadingMsg();
+                            }        
+                        }
+                    },
+                    error: function(event) {
+                        var title = "Arazoak ditugu konekxioarekin, saiatu geroago berriz";
+                        var html = Mustache.to_html(newsTemplate, title);
+                        var content = $(html).find("div[data-role=content]")[0];
+                        $('body').append(html);
+                        $("#noticia > div[data-role=content]").replaceWith(content);
+                        $.mobile.hidePageLoadingMsg();
+                        $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
                     }
-                },
-                error: function(event) {
-                    var title = "Arazoak ditugu konekxioarekin, saiatu geroago berriz";
-                    var html = Mustache.to_html(newsTemplate, title);
-                    var content = $(html).find("div[data-role=content]")[0];
-                    $('body').append(html);
-                    $("#noticia > div[data-role=content]").replaceWith(content);
-                    $.mobile.hidePageLoadingMsg();
-                    $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
-                }
-            });
+                });
+            }
         }
 
         var newsTemplate = '<div data-role="page" id="noticia"><div data-theme="a" data-role="header" data-position="absolute"><h3><img src="img/logoNeiker.jpg" /></h3></div><div data-role="content"><h2>{{.}}</h2></div><div data-theme="a" data-role="footer" data-position="fixed"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
