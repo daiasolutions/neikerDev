@@ -73,7 +73,7 @@ $(document).bind('pageinit', function(){
                             $('body').append(html);
 
                             
-                            $("#" + hash +" ul:visible").listview("refresh");
+                            //$("#" + hash +" ul:visible").listview("refresh");
                             window.location.hash=hash;
                             $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
 
