@@ -95,58 +95,6 @@ $(document).bind('pageinit', function(){
                             }
 
                             $.mobile.hidePageLoadingMsg();
-
-                            //on click
-                            $("a.news").on("click", function(event) {
-                                event.preventDefault();
-                                $.ajax({
-                                    url: event.delegateTarget.href,
-                                    beforeSend: function ( xhr ) {
-                                        $.mobile.showPageLoadingMsg();
-                                    },
-                                    success: function(data, textStatus, jqXHR) {
-                                        var json=$.parseJSON(data);
-                                        pepe=json.post.custom_fields;
-                                        $("div#noticia").remove();
-                                        window.location.hash="noticia";                   
-
-                                        //create JSON object to fill template
-                                        var title=json.post.title;
-
-                                        var div = document.createElement('div');
-                                        div.innerHTML = json.post.content;
-                                        var htmlPolilla;
-                                        var html = Mustache.to_html(newsTemplate, title);
-                                        var content = $(html).find("div[data-role=content]")[0];
-                                        $(content).append(div);
-                                        $('body').append(html);
-                                        $("#noticia > div[data-role=content]").replaceWith(content);
-                                        if (json.post.title.indexOf("recuento de polillas")!= -1 || 
-                                            json.post.title.indexOf("Recuento de polillas")!= -1) {
-                                            var fields = json.post.custom_fields;
-                                            var polillaJSON = {};
-                                            polillaJSON.startDate=fields["Fecha Inicio"][0];
-                                            polillaJSON.endDate=fields["Fecha Fin"][0];
-                                            polillaJSON.zona=fields["Zona"][0];
-                                            polillaJSON.fenState=fields["Estado_Fenologico"][0];
-                                            polillaJSON.polNumber=fields["Lobesia"][0];
-                                            htmlPolilla = Mustache.to_html(polillaTemplate,polillaJSON);
-                                            $("#noticia h2").after(htmlPolilla);
-                                        }
-                                        $.mobile.hidePageLoadingMsg();
-                                        $.mobile.changePage("#noticia",{ transition: "slide", changeHash: false });
-                                    },
-                                    error: function(event) {
-                                        var title = "Arazoak ditugu konekxioarekin, saiatu geroago berriz";
-                                        var html = Mustache.to_html(newsTemplate, title);
-                                        var content = $(html).find("div[data-role=content]")[0];
-                                        $('body').append(html);
-                                        $("#noticia > div[data-role=content]").replaceWith(content);
-                                        $.mobile.hidePageLoadingMsg();
-                                        $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
-                                    }
-                                });
-                            });
                         }        
                     }
                 },
@@ -162,12 +110,62 @@ $(document).bind('pageinit', function(){
             });
         }
 
+        //on click
+        $("a.news").on("click", function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: event.delegateTarget.href,
+            beforeSend: function ( xhr ) {
+                $.mobile.showPageLoadingMsg();
+            },
+            success: function(data, textStatus, jqXHR) {
+                var json=$.parseJSON(data);
+                pepe=json.post.custom_fields;
+                $("div#noticia").remove();
+                window.location.hash="noticia";                   
+
+                //create JSON object to fill template
+                var title=json.post.title;
+
+                var div = document.createElement('div');
+                div.innerHTML = json.post.content;
+                var htmlPolilla;
+                var html = Mustache.to_html(newsTemplate, title);
+                var content = $(html).find("div[data-role=content]")[0];
+                $(content).append(div);
+                $('body').append(html);
+                $("#noticia > div[data-role=content]").replaceWith(content);
+                if (json.post.title.indexOf("recuento de polillas")!= -1 || 
+                    json.post.title.indexOf("Recuento de polillas")!= -1) {
+                    var fields = json.post.custom_fields;
+                    var polillaJSON = {};
+                    polillaJSON.startDate=fields["Fecha Inicio"][0];
+                    polillaJSON.endDate=fields["Fecha Fin"][0];
+                    polillaJSON.zona=fields["Zona"][0];
+                    polillaJSON.fenState=fields["Estado_Fenologico"][0];
+                    polillaJSON.polNumber=fields["Lobesia"][0];
+                    htmlPolilla = Mustache.to_html(polillaTemplate,polillaJSON);
+                    $("#noticia h2").after(htmlPolilla);
+                }
+                $.mobile.hidePageLoadingMsg();
+                $.mobile.changePage("#noticia",{ transition: "slide", changeHash: false });
+            },
+            error: function(event) {
+                var title = "Arazoak ditugu konekxioarekin, saiatu geroago berriz";
+                var html = Mustache.to_html(newsTemplate, title);
+                var content = $(html).find("div[data-role=content]")[0];
+                $('body').append(html);
+                $("#noticia > div[data-role=content]").replaceWith(content);
+                $.mobile.hidePageLoadingMsg();
+                $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
+            }
+        });
+        });
+
         var newsTemplate = '<div data-role="page" id="noticia"><div data-theme="a" data-role="header" data-position="absolute"><h3><img src="img/logoNeiker.jpg" /></h3></div><div data-role="content"><h2>{{.}}</h2></div><div data-theme="a" data-role="footer" data-position="fixed"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
         var listTemplate = '<div data-role="page" id="temp{{page}}"><div data-theme="a" data-role="header" data-position="absolute"><img src="img/logoNeiker.jpg" /></div><div data-role="content"><ul data-role="listview" data-divider-theme="b" data-inset="true">{{#list}}<li data-theme="c"><a href="{{href}}" data-transition="slide" class="news"><h3 class="conFecha"><div class="fecpost"><span class="fecpostM">{{month}}</span><span class="fecpostD">{{day}}</span><span class="fecpostA">{{year}}</span></div><span class="titulo">{{title}}</span></h3></a></li>{{/list}}</ul><div data-role="controlgroup" data-type="horizontal" class="pagesButton"><a data-role="button" data-inline="true" href="" data-icon="arrow-l" data-iconpos="left">Atzera</a><a data-role="button" data-inline="true" href="" data-icon="arrow-r" data-iconpos="right">Aurrera</a></div><div data-theme="a" data-role="footer" data-position="fixed"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
 
         var polillaTemplate = '<ul class="txtMin"><li><strong>Datu jasotzea:</strong> {{{startDate}}} - {{{endDate}}}</li><li><strong>Lekua:</strong> {{zona}}</li><li><strong>Egoera fenologikoa: </strong>{{fenState}}</li><li><strong>Sits zenbakia: </strong>{{polNumber}}</li></ul><p class="txtMin">Mahatsondoaren egoera fenologikoa Bagglioliniren arabera (1952)</p>';
-
-        var estazioakContent = '<div data-role="page" id="estaciones"><div data-theme="a" data-role="header" data-position="absolute"><h3><img src="img/logoNeiker.jpg" /></h3></div><div data-role="content"><ul data-role="listview" data-divider-theme="b" data-inset="true"><li data-theme="c"><a href="http://www.avisosneiker.com/c/estaciones/estacionaltzola/page/1/?json=1" data-transition="slide" id="estaciones" class="newsList">Altzola</a></li><li data-theme="c"><a href="http://www.avisosneiker.com/c/estaciones/arkaute/page/1/?json=1" data-transition="slide" class="newsList">Arkaute</a></li></ul></div><div data-theme="a" data-role="footer" data-position="fixed"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
 
         var months = ["URT","OTS","MAR","API","MAI","EKA","UZT","ABU","IRA","URR","AZA","ABE"];
 
@@ -188,14 +186,9 @@ $(document).bind('pageinit', function(){
             loadList(event);
         });
 
-        $("#estazioak").on("click", function(event){
+        $(".ui-grid-b a.otherMenu").on("click", function(event) {
             event.preventDefault();
-            $.mobile.changePage(event.delegateTarget.href,{ transition: "none", changeHash: false });
-        });
-
-        $("#estazioak").on("click", function(event) {
-            var html = $.parseHTML(estazioakContent);
-            $("body").append(html);
-            $.mobile.changePage("#estaciones",{ transition: "none", changeHash: false }); 
+            window.location.hash=event.delegateTarget.href.split("#")[1];
+            $.mobile.changePage(event.delegateTarget.href,{ transition: "none", changeHash: false }); 
         });
     });
