@@ -1,7 +1,3 @@
-navigator.__defineGetter__('userAgent', function(){
-    return 'foo' // customized user agent
-});
-
 $(document).bind('pageinit', function(){ 
 
         $.mobile.defaultPageTransition="none";
@@ -44,7 +40,8 @@ $(document).bind('pageinit', function(){
                         $("div#" + hash).remove();
                         var json=$.parseJSON(data);
                         var totalPages = json.pages;
-                        if (json.count==0) {
+
+                        if (json.count==0) {//If no result
                             var title = "Ez da emaitzarik aurkitu";
                             var html = Mustache.to_html(newsTemplate, title);
                             var content = $(html).find("div[data-role=content]")[0];
@@ -52,7 +49,7 @@ $(document).bind('pageinit', function(){
                             $("#noticia > div[data-role=content]").replaceWith(content);
                             $.mobile.hidePageLoadingMsg();
                             $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
-                        } else {
+                        } else { //if result loop for get json of every post
                             var list=[];
                             for (var i = 0; i < json.posts.length; i++) {
                                 var post=json.posts[i];
@@ -78,6 +75,7 @@ $(document).bind('pageinit', function(){
                                 $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
                             }
 
+                            //Buttons of next and previous page depending
                             if (currentPageNumber==1) {
                                 if (totalPages!=1) {
                                     $("div.pagesButton a[data-icon=arrow-r]").css("display","block");
