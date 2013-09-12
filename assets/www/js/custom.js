@@ -72,7 +72,6 @@ $(document).bind('pageinit', function(){
                             var html = Mustache.to_html(listTemplate, object);
                             $('body').append(html);
 
-                            
                             //$("#" + hash +" ul:visible").listview("refresh");
                             window.location.hash=hash;
                             $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
@@ -168,6 +167,8 @@ $(document).bind('pageinit', function(){
 
         var polillaTemplate = '<ul class="txtMin"><li><strong>Datu jasotzea:</strong> {{{startDate}}} - {{{endDate}}}</li><li><strong>Lekua:</strong> {{zona}}</li><li><strong>Egoera fenologikoa: </strong>{{fenState}}</li><li><strong>Sits zenbakia: </strong>{{polNumber}}</li></ul><p class="txtMin">Mahatsondoaren egoera fenologikoa Bagglioliniren arabera (1952)</p>';
 
+        var estazioakContent = '<div data-role="page" id="estaciones"><div data-theme="a" data-role="header" data-position="absolute"><h3><img src="img/logoNeiker.jpg" /></h3></div><div data-role="content"><ul data-role="listview" data-divider-theme="b" data-inset="true"><li data-theme="c"><a href="http://www.avisosneiker.com/c/estaciones/estacionaltzola/page/1/?json=1" data-transition="slide" id="estaciones" class="newsList">Altzola</a></li><li data-theme="c"><a href="http://www.avisosneiker.com/c/estaciones/arkaute/page/1/?json=1" data-transition="slide" class="newsList">Arkaute</a></li></ul></div><div data-theme="a" data-role="footer" data-position="fixed"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
+
         var months = ["URT","OTS","MAR","API","MAI","EKA","UZT","ABU","IRA","URR","AZA","ABE"];
 
         $("a.newsList").on("click",function(event) {
@@ -190,5 +191,11 @@ $(document).bind('pageinit', function(){
         $("#estazioak").on("click", function(event){
             event.preventDefault();
             $.mobile.changePage(event.delegateTarget.href,{ transition: "none", changeHash: false });
+        });
+
+        $("#estazioak").on("click", function(event) {
+            var html = $.parseHTML(estazioakContent);
+            $("body").append(html);
+            $.mobile.changePage("#estaciones",{ transition: "none", changeHash: false }); 
         });
     });
