@@ -1,3 +1,7 @@
+/*navigator.__defineGetter__('userAgent', function(){
+    return 'foo' // customized user agent
+});*/
+
 $(document).bind('pageinit', function(){ 
 
         $.mobile.defaultPageTransition="none";
@@ -50,7 +54,8 @@ $(document).bind('pageinit', function(){
                             $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
                         } else {
                             var list=[];
-                            for (var i = 0; i < json.posts.length; i++) {
+                            /*for (var i = 0; i < json.posts.length; i++) {*/
+                            for (var i = 0; i < 10; i++) {
                                 var post=json.posts[i];
                                 var object = {};
                                 object.title=post.title;
