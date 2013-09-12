@@ -29,6 +29,7 @@ $(document).bind('pageinit', function(){
         function loadList(event, hash){
             var  currentPageNumber = parseInt(event.delegateTarget.href.split("page/")[1].split("/?")[0]);
             hash = "temp" + currentPageNumber;
+            alert(new Date().getTime());
             if (lastUrl!=event.delegateTarget.href) {
                 lastUrl=event.delegateTarget.href;
                 $.ajax({
