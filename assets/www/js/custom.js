@@ -76,7 +76,7 @@ $(document).bind('pageinit', function(){
                             }
 
                             //Buttons of next and previous page depending
-                            /*if (currentPageNumber==1) {
+                            if (currentPageNumber==1) {
                                 if (totalPages!=1) {
                                     $("div.pagesButton a[data-icon=arrow-r]").css("display","block");
                                     $("div.pagesButton a[data-icon=arrow-r]").attr("href",
@@ -91,11 +91,11 @@ $(document).bind('pageinit', function(){
                                     $("div.pagesButton a[data-icon=arrow-r]").attr("href",
                                     getNextPageHref(event.delegateTarget.href,currentPageNumber));
                                 }
-                            }*/
+                            }
 
                             $.mobile.hidePageLoadingMsg();
                             //on click
-                            $("a.news").on("click", function(event) {
+                            /*$("a.news").on("click", function(event) {
                                 event.preventDefault();
                                 $.ajax({
                                     url: event.delegateTarget.href,
@@ -144,7 +144,7 @@ $(document).bind('pageinit', function(){
                                         $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
                                     }
                                 });
-                            });
+                            });*/
                         }        
                     }
                 },
