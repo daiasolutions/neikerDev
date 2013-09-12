@@ -15,8 +15,6 @@ Tags:IKT
          ############################### */
 
 * {margin:0; padding:0;}
-body {font:normal 10px Helvetica; color:#666; background:url(img/fondobody.jpg) left -3px repeat-x #fff;}
-body.interior  {background:url(images/fondobody2.jpg) left -3px repeat-x #fff;}
 h1, h2, h3, h4, h5, h6 {margin:10px 0 0 0;}
 p {margin:0px 0px 20px 0px;}
 a {outline:none; text-decoration:none; color:#8a8a8a;}
