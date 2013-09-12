@@ -50,6 +50,8 @@ $(document).bind('pageinit', function(){
                             $.mobile.hidePageLoadingMsg();
                             $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
                         } else { //if result loop for get json of every post
+
+                            //Generate json to fill template
                             var list=[];
                             for (var i = 0; i < json.posts.length; i++) {
                                 var post=json.posts[i];
@@ -65,15 +67,15 @@ $(document).bind('pageinit', function(){
                             var object = {};
                             object.list=list;
                             object.page = currentPageNumber;
+
+                            //Create html and append it to body
                             var html = Mustache.to_html(listTemplate, object);
                             $('body').append(html);
+
+                            
                             $("#" + hash +" ul:visible").listview("refresh");
-                            if (window.location.hash=="#" + hash) {
-                                $.mobile.activePage.trigger("refresh");
-                            } else {
-                                window.location.hash=hash;
-                                $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
-                            }
+                            window.location.hash=hash;
+                            $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
 
                             //Buttons of next and previous page depending
                             if (currentPageNumber==1) {
@@ -94,8 +96,9 @@ $(document).bind('pageinit', function(){
                             }
 
                             $.mobile.hidePageLoadingMsg();
+
                             //on click
-                            /*$("a.news").on("click", function(event) {
+                            $("a.news").on("click", function(event) {
                                 event.preventDefault();
                                 $.ajax({
                                     url: event.delegateTarget.href,
@@ -144,7 +147,7 @@ $(document).bind('pageinit', function(){
                                         $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
                                     }
                                 });
-                            });*/
+                            });
                         }        
                     }
                 },
