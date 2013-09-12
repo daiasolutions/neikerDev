@@ -29,9 +29,6 @@ $(document).bind('pageinit', function(){
         function loadList(event, hash){
             var  currentPageNumber = parseInt(event.delegateTarget.href.split("page/")[1].split("/?")[0]);
             hash = "temp" + currentPageNumber;
-            alert(new Date().getTime());
-            if (lastUrl!=event.delegateTarget.href) {
-                lastUrl=event.delegateTarget.href;
                 $.ajax({
                     url: event.delegateTarget.href,
                     beforeSend: function ( xhr ) {
@@ -112,7 +109,6 @@ $(document).bind('pageinit', function(){
                         $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
                     }
                 });
-            }
         }
 
         var newsTemplate = '<div data-role="page" id="noticia"><div data-theme="a" data-role="header" data-position="absolute"><h3><img src="img/logoNeiker.jpg" /></h3></div><div data-role="content"><h2>{{.}}</h2></div><div data-theme="a" data-role="footer" data-position="fixed"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
