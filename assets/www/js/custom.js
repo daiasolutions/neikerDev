@@ -68,7 +68,7 @@ $(document).bind('pageinit', function(){
                             $('body').append(html);
                             $("#" + hash +" ul:visible").listview("refresh");
                             if (window.location.hash=="#" + hash) {
-                                //$.mobile.activePage.trigger("refresh");
+                                $.mobile.activePage.trigger("refresh");
                             } else {
                                 window.location.hash=hash;
                                 $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
