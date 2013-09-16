@@ -40,8 +40,9 @@ $(document).bind('pageinit', function(){
                     success: function(data, textStatus, jqXHR) {
                         event.preventDefault();
                         var now = new Date().getTime();
+                        var reload = (window.location.hash=="#" + hash);
                         if ((now-timestamp) > 200) {
-                            $("div#" + hash).remove();
+                            //$("div#" + hash).remove();
                             var json=$.parseJSON(data);
                             var totalPages = json.pages;
 
@@ -75,10 +76,14 @@ $(document).bind('pageinit', function(){
                                 //Create html and append it to body
                                 var html = Mustache.to_html(listTemplate, object);
                                 $('body').append(html);
-
-                                //$("#" + hash +" ul:visible").listview("refresh");
-                                window.location.hash=hash;
-                                $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });
+                                
+                                if (reload) {
+                                    $("#" + hash).attr("id",hash + "1");
+                                    window.location.hash=hash + "1";
+                                } else {
+                                    window.location.hash=hash;
+                                }
+                                $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });  
 
                                 //Buttons of next and previous page depending
                                 if (currentPageNumber==1) {
@@ -187,7 +192,7 @@ $(document).bind('pageinit', function(){
 
         $("input[data-type=search]").on("keydown",function(event) {
             if (event.keyCode==13) {
-                event.target.href="http://www.avisosneiker.com/page/1/?s=" + $("input[data-type=search]").val() +"&submit=Buscar&json=1&count=8";
+                event.target.href="http://www.avisosneiker.com/page/1/?s=" + $("input[data-type=search]:visible").val() +"&submit=Buscar&json=1&count=8";
                 loadList(event);
             }
         });
@@ -202,5 +207,11 @@ $(document).bind('pageinit', function(){
             $("body").append(html);
             $.mobile.changePage("#" + event.currentTarget.id ,{ transition: "none", changeHash: false }); 
             window.location.hash=event.currentTarget.id;
+        });
+
+        $("div[data-role=header] img").on("click", function(event){
+            if ($("#home:visible").length == 0) {
+                $.mobile.changePage("#home",{ transition: "none", changeHash: false });
+            }
         });
     });
