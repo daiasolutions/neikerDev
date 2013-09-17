@@ -113,8 +113,10 @@ $(document).bind('pageinit', function(){
                         var content = $(html).find("div[data-role=content]")[0];
                         $('body').append(html);
                         $("#noticia > div[data-role=content]").replaceWith(content);
+                        var id="noticia" + new Date().getTime();
+                        $("#noticia").attr("id",id);
                         $.mobile.hidePageLoadingMsg();
-                        $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
+                        $.mobile.changePage("#" + id,{ transition: "none", changeHash: false });
                     }
                 });
             }
@@ -142,6 +144,7 @@ $(document).bind('pageinit', function(){
                     $.mobile.showPageLoadingMsg();
                 },
                 success: function(data, textStatus, jqXHR) {
+                    if ($("#noticia").length!=0) var noticiaExists=true;
                     var json=$.parseJSON(data);
                     pepe=json.post.custom_fields;
                     $("div#noticia").remove();
@@ -170,8 +173,11 @@ $(document).bind('pageinit', function(){
                         htmlPolilla = Mustache.to_html(polillaTemplate,polillaJSON);
                         $("#noticia h2").after(htmlPolilla);
                     }
+                    $("#noticia > div[data-role=content]").replaceWith(content);
+                    var id="noticia" + new Date().getTime();
+                    $("#noticia").attr("id",id);
                     $.mobile.hidePageLoadingMsg();
-                    $.mobile.changePage("#noticia",{ transition: "slide", changeHash: false });
+                    $.mobile.changePage("#" + id,{ transition: "none", changeHash: false });
                 },
                 error: function(event) {
                     var title = "Arazoak ditugu konekxioarekin, saiatu geroago berriz";
@@ -179,8 +185,10 @@ $(document).bind('pageinit', function(){
                     var content = $(html).find("div[data-role=content]")[0];
                     $('body').append(html);
                     $("#noticia > div[data-role=content]").replaceWith(content);
+                    var id="noticia" + new Date().getTime();
+                    $("#noticia").attr("id",id);
                     $.mobile.hidePageLoadingMsg();
-                    $.mobile.changePage("#noticia",{ transition: "none", changeHash: false });
+                    $.mobile.changePage("#" + id,{ transition: "none", changeHash: false });
                 }
             });
         });
