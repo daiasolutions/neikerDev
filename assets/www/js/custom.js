@@ -29,7 +29,7 @@ $(document).bind('pageinit', function(){
         function loadList(event, hash){
 
             var  currentPageNumber = parseInt(event.delegateTarget.href.split("page/")[1].split("/?")[0]);
-            hash = "temp" + currentPageNumber;
+            var hash = "temp" + new Date().getTime();
             if (lastUrl!=event.delegateTarget.href) {
                 lastUrl=event.delegateTarget.href;
                 $.ajax({
@@ -40,7 +40,6 @@ $(document).bind('pageinit', function(){
                     success: function(data, textStatus, jqXHR) {
                         event.preventDefault();
                         var now = new Date().getTime();
-                        var reload = (window.location.hash=="#" + hash);
                         if ((now-timestamp) > 200) {
                             //$("div#" + hash).remove();
                             var json=$.parseJSON(data);
@@ -76,13 +75,8 @@ $(document).bind('pageinit', function(){
                                 //Create html and append it to body
                                 var html = Mustache.to_html(listTemplate, object);
                                 $('body').append(html);
-                                
-                                if (reload) {
-                                    $("#" + hash).attr("id",hash + "1");
-                                    window.location.hash=hash + "1";
-                                } else {
-                                    window.location.hash=hash;
-                                }
+                                $("#temp").attr("id",hash);
+                                window.location.hash="temp" + currentPageNumber;
                                 $.mobile.changePage("#" + hash,{ transition: "none", changeHash: false });  
 
                                 //Buttons of next and previous page depending
@@ -102,7 +96,6 @@ $(document).bind('pageinit', function(){
                                         getNextPageHref(event.delegateTarget.href,currentPageNumber));
                                     }
                                 }
-
                                 $.mobile.hidePageLoadingMsg();
                             }        
                         }
@@ -123,7 +116,7 @@ $(document).bind('pageinit', function(){
         }
 
         var newsTemplate = '<div data-role="page" id="noticia"><div data-theme="a" data-role="header" data-position="absolute"><h3><img src="img/logoNeiker.jpg" /></h3></div><div data-role="content"><h2>{{.}}</h2></div><div data-theme="a" data-role="footer" data-position="absolute"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
-        var listTemplate = '<div data-role="page" id="temp{{page}}"><div data-theme="a" data-role="header" data-position="absolute"><img src="img/logoNeiker.jpg" /></div><div data-role="content"><ul data-role="listview" data-divider-theme="b" data-inset="true">{{#list}}<li data-theme="c"><a href="{{href}}" data-transition="slide" class="news"><h3 class="conFecha"><div class="fecpost"><span class="fecpostM">{{month}}</span><span class="fecpostD">{{day}}</span><span class="fecpostA">{{year}}</span></div><span class="titulo">{{title}}</span></h3></a></li>{{/list}}</ul><div data-role="controlgroup" data-type="horizontal" class="pagesButton"><a data-role="button" data-inline="true" href="" data-icon="arrow-l" data-iconpos="left">Atzera</a><a data-role="button" data-inline="true" href="" data-icon="arrow-r" data-iconpos="right">Aurrera</a></div><div data-theme="a" data-role="footer" data-position="absolute"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
+        var listTemplate = '<div data-role="page" id="temp"><div data-theme="a" data-role="header" data-position="absolute"><img src="img/logoNeiker.jpg" /></div><div data-role="content"><ul data-role="listview" data-divider-theme="b" data-inset="true">{{#list}}<li data-theme="c"><a href="{{href}}" data-transition="slide" class="news"><h3 class="conFecha"><div class="fecpost"><span class="fecpostM">{{month}}</span><span class="fecpostD">{{day}}</span><span class="fecpostA">{{year}}</span></div><span class="titulo">{{title}}</span></h3></a></li>{{/list}}</ul><div data-role="controlgroup" data-type="horizontal" class="pagesButton"><a data-role="button" data-inline="true" href="" data-icon="arrow-l" data-iconpos="left">Atzera</a><a data-role="button" data-inline="true" href="" data-icon="arrow-r" data-iconpos="right">Aurrera</a></div><div data-theme="a" data-role="footer" data-position="absolute"><input type="search" name="search" placeholder="Berriak bilatu" data-mini="true" data-theme="c" /></div></div>';
 
         var polillaTemplate = '<ul class="txtMin"><li><strong>Datu jasotzea:</strong> {{{startDate}}} - {{{endDate}}}</li><li><strong>Lekua:</strong> {{zona}}</li><li><strong>Egoera fenologikoa: </strong>{{fenState}}</li><li><strong>Sits zenbakia: </strong>{{polNumber}}</li></ul><p class="txtMin">Mahatsondoaren egoera fenologikoa Bagglioliniren arabera (1952)</p>';
 
