@@ -20,11 +20,8 @@
           name:'texts', 
           path:'lang/', 
           mode:'both',
-          language:'es', 
-          callback: function() {
-              console.log(estaciones_text);
-              console.log(evanl(estaciones_text));
-          }
+          language:'es',
+          encoding: 'ISO-8859-1'
       });
   </script>
 
@@ -57,49 +54,49 @@
                 <a id="estaciones" class="otherMenu">
                     <img src="img/estaciones.png"/>
                 </a>
-                <div id ="estaciones_text" class="imgCaption">Estazioak</div>
+                <div id="estaciones_text" class="imgCaption i18n-text">Estazioak</div>
             </div>
             <div class="ui-block-b">
                 <a id="comarcas"  class="otherMenu">
                     <img src="img/comarcas.png" />
                 </a>
-                <div class="imgCaption">Eskualdeak</div>
+                <div id="comarcas_text" class="imgCaption i18n-text">Eskualdeak</div>
             </div>
             <div class="ui-block-a">
                 <a id="cultivos" class="otherMenu">
                     <img src="img/cultivos.png" />
                 </a>
-                <div class="imgCaption">Laborantzak</div>
+                <div id="cultivos_text" class="imgCaption i18n-text">Laborantzak</div>
             </div>
             <div class="ui-block-b">
                 <a id="enfermedades" class="otherMenu">
                     <img src="img/enfermedades.png" />
                 </a>
-                <div class="">Gaixotasunak</div>
+                <div id="enfermedades_text" class="i18n-text">Gaixotasunak</div>
             </div>
             <div class="ui-block-a">
                 <a id="plagas" class="otherMenu">
                     <img src="img/plagas.png"/>
                 </a>
-                <div class="imgCaption">Izurriteak</div>
+                <div id="plagas_text" class="imgCaption i18n-text">Izurriteak</div>
             </div>
             <div class="ui-block-b">
                 <a href="http://www.avisosneiker.com/c/alertas/page/1/?json=1&count=10" class="newsList">
                     <img src="img/alerta.png" />
                 </a>
-                <div class="imgCaption">Alertak</div>
+                <div id="alerta_text" class="imgCaption i18n-text">Alertak</div>
             </div>
             <div class="ui-block-a">
                 <a href="http://www.avisosneiker.com/c/recomendaciones-de-riego/page/1/?json=1&count=10" class="newsList">
                     <img src="img/riego.png" />
                 </a>
-                <div class="imgCaption">Ureztatze gomendioak</div>
+                <div id="recomendaciones_text" class="imgCaption i18n-text">Ureztatze gomendioak</div>
             </div>
             <div class="ui-block-b">
                 <a href="http://www.avisosneiker.com/c/novedades/page/1/?json=1&count=10" class="newsList">
                     <img src="img/novedades.png" />
                 </a>
-                <div class="imgCaption">Berriak</div>
+                <div id="novedades_text" class="imgCaption i18n-text">Berriak</div>
             </div>
         </div>
     </div>
@@ -108,4 +105,10 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+  $(".i18n-text").each(function(index){
+      var id = $(this).attr("id");
+      $(this).html(eval(id));
+  });
+</script>
 </html>
