@@ -26,6 +26,7 @@ div[data-role=header] > h3 {
     position: relative;
     top: 5px;
     float: left;
+    left:5px;
 }
 
 #logo {
@@ -39,6 +40,7 @@ div[data-role=header] > h3 {
     display: inline;
     position: relative;
     top: 5px;
+    left:-5px;
 }
 
 * {
