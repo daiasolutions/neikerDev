@@ -17,6 +17,24 @@
  * under the License.
  */
 
+#home div[data-role=content] img {
+        width: 100%;
+}
+
+.ui-block-a {
+	margin-top: 10%!important;
+}
+
+.ui-block-b {
+	margin-top: 10%!important;
+    margin-left: 10%!important;
+}
+
+.ui-block-c {
+	margin-top: 10%!important;
+    margin-left: 10%!important;
+}
+
 div[data-role=header] > h3 {
     display: inline!important;
 }
@@ -194,6 +212,10 @@ div.pagesButton a {
 
 .ui-footer {
     position: absolute;
+}
+
+@media screen and (max-width:700px) {
+    
 }
 
 @media screen and (max-width: 490px) {
